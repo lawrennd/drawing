@@ -1,0 +1,5 @@
+# These are files that should be packaged for the drawing software
+dir: .
+~/mlprojects/drawing/matlab/testimage.jpg
+dir: html
+~/mlprojects/drawing/html/index.html
