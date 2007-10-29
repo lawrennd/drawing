@@ -1,6 +1,6 @@
 function newObject = objectCopy(object);
 
-% OBJECTMOVE Moves an object to a new point.
+% OBJECTCOPY Moves an object to a new point.
 
 % DRAWING
 
