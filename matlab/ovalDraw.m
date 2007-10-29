@@ -3,6 +3,7 @@ function ovals = ovalDraw(ovals);
 % OVALDRAW Draw an oval.
 
 % DRAWING
+% Copyright (c) Neil Lawrence 2002
 
 t = 0:pi/24:2*pi;
 for i = 1:length(ovals)

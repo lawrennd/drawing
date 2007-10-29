@@ -4,4 +4,6 @@ function object = objectDraw(object);
 
 % DRAWING
 
-object = feval([object.type 'Draw'], object);
+for i = 1:length(object)
+  object(i) = feval([object(i).type 'Draw'], object(i));
+end
