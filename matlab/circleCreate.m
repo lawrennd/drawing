@@ -1,6 +1,6 @@
 function circle = circleCreate(centre, radius, handle);
 
-% CIRCLECREATE Create a struct containing the parameters of an circle.
+% CIRCLECREATE Create a struct containing the parameters of a circle.
 
 % DRAWING
 

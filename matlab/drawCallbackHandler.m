@@ -16,127 +16,127 @@ persistent LASTPOINT
 
 switch MODE
 
-  case 'Draw'
-   switch call 
-    case 'click'
-     [x, y]  = localCheckPointPosition(VISUALISEINFO);  
-     % If the pointer was not in the axes the values will be empty 
-     if ~isempty(x)
-       if ~ACTIVEFLAG
-	 SHAPEINFO.firstClickPoint = [x y]; 
-	 switch SHAPEMODE
-	  case 'circle'
-	   SHAPEINFO.currentObject = circleCreate(SHAPEINFO.firstClickPoint, 0);
-	   SHAPEINFO.currentObject = circleDraw(SHAPEINFO.currentObject);
-	   
-	  case 'oval'
-	   SHAPEINFO.currentObject = ovalCreate(SHAPEINFO.firstClickPoint, 0, 0);
-	   SHAPEINFO.currentObject = ovalDraw(SHAPEINFO.currentObject);
-	   
-	  case 'rect'
-	   SHAPEINFO.currentObject = rectCreate(SHAPEINFO.firstClickPoint, ...
-						SHAPEINFO.firstClickPoint);
-	   SHAPEINFO.currentObject = rectDraw(SHAPEINFO.currentObject);
-	  case 'square'
-	   SHAPEINFO.currentObject = squareCreate(SHAPEINFO.firstClickPoint, 0);
-	   SHAPEINFO.currentObject = squareDraw(SHAPEINFO.currentObject);
-	   
-	  case 'grid'
-	   SHAPEINFO.currentObject = gridCreate(SHAPEINFO.firstClickPoint, ...
-						SHAPEINFO.firstClickPoint, ...
-						SHAPEINFO.gridParameters.numRows, ...
-						SHAPEINFO.gridParameters.numColumns);
-	   SHAPEINFO.currentObject = gridDraw(SHAPEINFO.currentObject);
-	   
-	 end
-	 set(SHAPEINFO.currentObject.handle, 'EraseMode', 'xor');
-	 ACTIVEFLAG = 1;
-       else
-	 SHAPEINFO.currentObject.selected = 0;
-	 SHAPEINFO.currentObject = objectDraw(SHAPEINFO.currentObject);
-	 SHAPEINFO.shape{end+1} = SHAPEINFO.currentObject;
-	 ACTIVEFLAG = 0;
-	 
-       end
-     end
-     
-    case 'move'
-     
-     [x, y] = localCheckPointPosition(VISUALISEINFO);  
-     if ~isempty(x)
-       set(VISUALISEINFO.positionTxt, ...
-	   'String', [num2str(x) ', ' num2str(y)]);
-       
-       set(VISUALISEINFO.drawFigure, 'Pointer', 'fullcrosshair')
-       if ACTIVEFLAG 
-	 
-	 % Check if escape pressed - improves responsiveness.
-	 key = double(get(VISUALISEINFO.drawFigure, 'CurrentCharacter'));
-	 if ~isempty(key) & (key == 27)
-	   % Undo current Draw activity
-	   set(VISUALISEINFO.drawFigure, 'CurrentCharacter', ' ')
-	   objectDelete(SHAPEINFO.currentObject);
-	   ACTIVEFLAG = 0;  
-	 end
-	 % Order points such that top left is first bottom right is second
-	 startj = min([SHAPEINFO.firstClickPoint(1) x]);
-	 endj = max([SHAPEINFO.firstClickPoint(1) x]);
-	 starti = min([SHAPEINFO.firstClickPoint(2) y]);
-	 endi = max([SHAPEINFO.firstClickPoint(2) y]);
-	 
-	 switch SHAPEMODE
-	  case 'circle'
-	   SHAPEINFO.currentObject.radius = sqrt(dist2(SHAPEINFO.firstClickPoint, [x y]));
-	   SHAPEINFO.currentObject = circleDraw(SHAPEINFO.currentObject);
-	   
-	  case 'oval'
-	   irad = (endi - starti)/2;
-	   jrad = (endj - startj)/2;
-	   SHAPEINFO.currentObject.centre = [startj + jrad starti + irad];
-	   SHAPEINFO.currentObject.xradius = jrad;
-	   SHAPEINFO.currentObject.yradius = irad;
-	   SHAPEINFO.currentObject = ovalDraw(SHAPEINFO.currentObject);
-	   
-	  case 'rect'
-	   SHAPEINFO.currentObject.firstPoint = [startj starti];
-	   SHAPEINFO.currentObject.secondPoint = [endj endi];
-	   SHAPEINFO.currentObject = rectDraw(SHAPEINFO.currentObject);
-	   
-	  case 'square'
-	   
-	   SHAPEINFO.currentObject.width = 2*max(abs(SHAPEINFO.firstClickPoint - [x y]));
-	   SHAPEINFO.currentObject = squareDraw(SHAPEINFO.currentObject);
-	   
-	  case 'grid'
-	   SHAPEINFO.currentObject.firstPoint = [startj, starti];
-	   SHAPEINFO.currentObject.secondPoint = [endj, endi];
-	   SHAPEINFO.currentObject.numRows = ...
-	       SHAPEINFO.gridParameters.numRows;
-	   SHAPEINFO.currentObject.numColumns = ...
-	       SHAPEINFO.gridParameters.numColumns;
-	   SHAPEINFO.currentObject = gridDraw(SHAPEINFO.currentObject);
-	 end
-       end
-     else
-       set(VISUALISEINFO.drawFigure, 'Pointer', 'arrow')
-     end
-    case 'deleteCurrent'
-     delete(SHAPEINFO.currentObject)
-     ACTIVEFLAG = 0;
-     
-    case 'keypress'
-     % Look for escape key to stop current draw.
-     if ACTIVEFLAG 
-       key = double(get(VISUALISEINFO.drawFigure, 'CurrentCharacter'));
-       if ~isempty(key) & key == 27
-	 % Undo current Draw activity
-	 set(VISUALISEINFO.drawFigure, 'CurrentCharacter', ' ')
-	 objectdelete(SHAPEINFO.currentObject);
-	 ACTIVEFLAG = 0;  
-       end
-     end
-   end
-   
+ case 'Draw'
+  switch call 
+   case 'click'
+    [x, y]  = localCheckPointPosition(VISUALISEINFO);  
+    % If the pointer was not in the axes the values will be empty 
+    if ~isempty(x)
+      if ~ACTIVEFLAG
+        SHAPEINFO.firstClickPoint = [x y]; 
+        switch SHAPEMODE
+         case 'circle'
+          SHAPEINFO.currentObject = circleCreate(SHAPEINFO.firstClickPoint, 0);
+          SHAPEINFO.currentObject = circleDraw(SHAPEINFO.currentObject);
+          
+         case 'oval'
+          SHAPEINFO.currentObject = ovalCreate(SHAPEINFO.firstClickPoint, 0, 0);
+          SHAPEINFO.currentObject = ovalDraw(SHAPEINFO.currentObject);
+          
+         case 'rect'
+          SHAPEINFO.currentObject = rectCreate(SHAPEINFO.firstClickPoint, ...
+                                               SHAPEINFO.firstClickPoint);
+          SHAPEINFO.currentObject = rectDraw(SHAPEINFO.currentObject);
+         case 'square'
+          SHAPEINFO.currentObject = squareCreate(SHAPEINFO.firstClickPoint, 0);
+          SHAPEINFO.currentObject = squareDraw(SHAPEINFO.currentObject);
+          
+         case 'grid'
+          SHAPEINFO.currentObject = gridCreate(SHAPEINFO.firstClickPoint, ...
+                                               SHAPEINFO.firstClickPoint, ...
+                                               SHAPEINFO.gridParameters.numRows, ...
+                                               SHAPEINFO.gridParameters.numColumns);
+          SHAPEINFO.currentObject = gridDraw(SHAPEINFO.currentObject);
+          
+        end
+        set(SHAPEINFO.currentObject.handle, 'EraseMode', 'xor');
+        ACTIVEFLAG = 1;
+      else
+        SHAPEINFO.currentObject.selected = 0;
+        SHAPEINFO.currentObject = objectDraw(SHAPEINFO.currentObject);
+        SHAPEINFO.shape{end+1} = SHAPEINFO.currentObject;
+        ACTIVEFLAG = 0;
+        
+      end
+    end
+    
+   case 'move'
+    
+    [x, y] = localCheckPointPosition(VISUALISEINFO);  
+    if ~isempty(x)
+      set(VISUALISEINFO.positionTxt, ...
+          'String', [num2str(x) ', ' num2str(y)]);
+      
+      set(VISUALISEINFO.drawFigure, 'Pointer', 'fullcrosshair')
+      if ACTIVEFLAG 
+        
+        % Check if escape pressed - improves responsiveness.
+        key = double(get(VISUALISEINFO.drawFigure, 'CurrentCharacter'));
+        if ~isempty(key) & (key == 27)
+          % Undo current Draw activity
+          set(VISUALISEINFO.drawFigure, 'CurrentCharacter', ' ')
+          objectDelete(SHAPEINFO.currentObject);
+          ACTIVEFLAG = 0;  
+        end
+        % Order points such that top left is first bottom right is second
+        startj = min([SHAPEINFO.firstClickPoint(1) x]);
+        endj = max([SHAPEINFO.firstClickPoint(1) x]);
+        starti = min([SHAPEINFO.firstClickPoint(2) y]);
+        endi = max([SHAPEINFO.firstClickPoint(2) y]);
+        
+        switch SHAPEMODE
+         case 'circle'
+          SHAPEINFO.currentObject.radius = sqrt(dist2(SHAPEINFO.firstClickPoint, [x y]));
+          SHAPEINFO.currentObject = circleDraw(SHAPEINFO.currentObject);
+          
+         case 'oval'
+          irad = (endi - starti)/2;
+          jrad = (endj - startj)/2;
+          SHAPEINFO.currentObject.centre = [startj + jrad starti + irad];
+          SHAPEINFO.currentObject.xradius = jrad;
+          SHAPEINFO.currentObject.yradius = irad;
+          SHAPEINFO.currentObject = ovalDraw(SHAPEINFO.currentObject);
+          
+         case 'rect'
+          SHAPEINFO.currentObject.firstPoint = [startj starti];
+          SHAPEINFO.currentObject.secondPoint = [endj endi];
+          SHAPEINFO.currentObject = rectDraw(SHAPEINFO.currentObject);
+          
+         case 'square'
+          
+          SHAPEINFO.currentObject.width = 2*max(abs(SHAPEINFO.firstClickPoint - [x y]));
+          SHAPEINFO.currentObject = squareDraw(SHAPEINFO.currentObject);
+          
+         case 'grid'
+          SHAPEINFO.currentObject.firstPoint = [startj, starti];
+          SHAPEINFO.currentObject.secondPoint = [endj, endi];
+          SHAPEINFO.currentObject.numRows = ...
+              SHAPEINFO.gridParameters.numRows;
+          SHAPEINFO.currentObject.numColumns = ...
+              SHAPEINFO.gridParameters.numColumns;
+          SHAPEINFO.currentObject = gridDraw(SHAPEINFO.currentObject);
+        end
+      end
+    else
+      set(VISUALISEINFO.drawFigure, 'Pointer', 'arrow')
+    end
+   case 'deleteCurrent'
+    delete(SHAPEINFO.currentObject)
+    ACTIVEFLAG = 0;
+    
+   case 'keypress'
+    % Look for escape key to stop current draw.
+    if ACTIVEFLAG 
+      key = double(get(VISUALISEINFO.drawFigure, 'CurrentCharacter'));
+      if ~isempty(key) & key == 27
+        % Undo current Draw activity
+        set(VISUALISEINFO.drawFigure, 'CurrentCharacter', ' ')
+        objectdelete(SHAPEINFO.currentObject);
+        ACTIVEFLAG = 0;  
+      end
+    end
+  end
+  
  case 'Edit'
   % Edit mode is activated
   
@@ -173,7 +173,7 @@ switch MODE
       
       set(VISUALISEINFO.drawFigure, 'Pointer', 'arrow')
     end
-   
+    
    case 'keypress'
     % Look for delete key to be pressed to remove object
     key = double(get(VISUALISEINFO.drawFigure, 'CurrentCharacter'));
@@ -194,7 +194,7 @@ switch MODE
  case 'Move'
   % Move mode is activated
   switch call
-   
+    
    case  'click'
     [x, y] = localCheckPointPosition(VISUALISEINFO);  
     if ~isempty(x)
@@ -236,31 +236,31 @@ switch MODE
 		     ' STARTPOINT haven''t been cleared up.'])
 	    end
 	  end
-
+          
 	end
       end
     end
-   
+    
    case 'move'
-     [x, y] = localCheckPointPosition(VISUALISEINFO);  
-     if ~isempty(x)
-       set(VISUALISEINFO.positionTxt, ...
-	   'String', [num2str(x) ', ' num2str(y)]);
-       
-       if ACTIVEFLAG 
-	 moveVector = [x y] - LASTPOINT;
-	 set(VISUALISEINFO.drawFigure, 'Pointer', 'fleur')      
-	 SHAPEINFO.shape{INDEX} = objectMove(SHAPEINFO.shape{INDEX}, ...
-					     moveVector); 
-	 
-	 LASTPOINT = [x y];
-       else
-	 set(VISUALISEINFO.drawFigure, 'Pointer', 'arrow')      
-       end
-     end
-  
+    [x, y] = localCheckPointPosition(VISUALISEINFO);  
+    if ~isempty(x)
+      set(VISUALISEINFO.positionTxt, ...
+          'String', [num2str(x) ', ' num2str(y)]);
+      
+      if ACTIVEFLAG 
+        moveVector = [x y] - LASTPOINT;
+        set(VISUALISEINFO.drawFigure, 'Pointer', 'fleur')      
+        SHAPEINFO.shape{INDEX} = objectMove(SHAPEINFO.shape{INDEX}, ...
+                                            moveVector); 
+        
+        LASTPOINT = [x y];
+      else
+        set(VISUALISEINFO.drawFigure, 'Pointer', 'arrow')      
+      end
+    end
+    
   end
- 
+  
  case 'Copy'
   % Copy mode is activated
   
