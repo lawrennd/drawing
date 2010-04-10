@@ -60,7 +60,9 @@ yLim	= get(gca,'Ylim');
 xWidth = xLim(2)-xLim(1);
 yWidth = yLim(2)-yLim(1);
 units_	= get(gca,'Units');
-set(gca,'Units','Pixels')
+if ~isoctave 
+  set(gca, 'Units', 'Pixels');
+end
 pos	= get(gca,'Position');
 set(gca,'Units',units_)
 xscale	= pos(4)/pos(3)*xWidth*arroxAxisPercent/100;
