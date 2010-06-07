@@ -1,4 +1,5 @@
-function handle = arrow(X, Y, headType, arrowColor,lineThickness,headSize,arrowHeight)
+function handle = arrow(X, Y, headType, arrowColor, lineThickness, headSize, ...
+                        arrowHeight)
 
 % ARROW Draw an arrow. 
 
@@ -63,9 +64,10 @@ units_	= get(gca,'Units');
 if ~isoctave 
   set(gca, 'Units', 'Pixels');
 end
-pos	= get(gca,'Position');
+pos = get(gca,'Position');
+paperPos = get(gcf,'PaperPosition');
 set(gca,'Units',units_)
-xscale	= pos(4)/pos(3)*xWidth*arroxAxisPercent/100;
+xscale	= paperPos(4)/paperPos(3)*pos(4)/pos(3)*xWidth*arroxAxisPercent/100;
 yscale  = yWidth*arroxAxisPercent/100;
 
 TRIx = [-0.5; 0.5; 0]*headSize;
