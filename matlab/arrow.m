@@ -60,13 +60,13 @@ xLim	= get(gca,'Xlim');
 yLim	= get(gca,'Ylim');
 xWidth = xLim(2)-xLim(1);
 yWidth = yLim(2)-yLim(1);
-units_	= get(gca,'Units');
+units	= get(gca,'Units');
 if ~isoctave 
   set(gca, 'Units', 'Pixels');
 end
 pos = get(gca,'Position');
 paperPos = get(gcf,'PaperPosition');
-set(gca,'Units',units_)
+set(gca,'Units',units)
 xscale	= paperPos(4)/paperPos(3)*pos(4)/pos(3)*xWidth*arroxAxisPercent/100;
 yscale  = yWidth*arroxAxisPercent/100;
 
