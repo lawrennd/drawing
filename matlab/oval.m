@@ -1,6 +1,22 @@
 function handle = oval(centres, radiiX, radiiY, handle)
 
 % OVAL Creates an oval object.
+% FORMAT
+% ARG centres : centres of the ovals to draw.
+% ARG radiiX : x radii of ovals to draw.
+% ARG radiiY : x radii of ovals to draw.
+% RETURN handle : handle of ovals that were drawn.
+%
+% FORMAT
+% ARG centres : centres of the ovals to draw.
+% ARG radiiX : x radii of ovals to draw.
+% ARG radiiY : y radii of ovals to draw.
+% ARG handle : handles of ovals to modify.
+% RETURN handle : handle of ovals that were drawn.
+%
+% SEEALSO : circle
+%
+% COPYRIGHT : Neil D. Lawrence, 2005
 
 % DRAWING
 
