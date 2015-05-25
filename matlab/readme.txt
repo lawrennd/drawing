@@ -1,6 +1,11 @@
 This is the drawing toolbox. It contains some simple utilities for adding shapes to an image. These are demonstrated with the script imageLabel.m.
 
 
+Version 0.112 Release Notes
+---------------------------
+
+Changed arrow code for demos of LFM talk.
+
 Version 0.111 Release Notes
 ---------------------------
 

@@ -1,4 +1,5 @@
-function handle = arrow(X, Y, headType, arrowColor,lineThickness,headSize,arrowHeight)
+function handle = arrow(X, Y, headType, arrowColor, lineThickness, headSize, ...
+                        arrowHeight)
 
 % ARROW Draw an arrow. 
 
@@ -7,21 +8,36 @@ function handle = arrow(X, Y, headType, arrowColor,lineThickness,headSize,arrowH
 % DRAWING
 
 if nargin<7
-  arrowHeight	= 2;
-end
-if nargin<6
-  headSize = 1;
-end
-if nargin<5
-  lineThickness = 1;
-end
-if nargin<4
-  arrowColor = 'w';
-end
-if nargin<3
-  headType = 'open';
+  arrowHeight	= [];
+  if nargin<6
+    headSize = [];
+    if nargin<5
+      lineThickness = [];
+      if nargin<4
+        arrowColor = [];
+        if nargin<3
+          headType = [];
+        end
+      end
+    end
+  end
 end
 
+if isempty(arrowHeight)
+  arrowHeight = 2;
+end
+if isempty(headSize)
+  headSize = 1;
+end
+if isempty(lineThickness)
+  lineThickness = 1;
+end
+if isempty(arrowColor)
+  arrowColor = 'b';
+end
+if isempty(headType)
+  headType = 'open';
+end
 % This is the standard size of an arrow as a percentage of the
 % dimensions. This is multiplied by the parameter `headSize' to create arrow
 % heads of differing relative sizes.
@@ -44,11 +60,14 @@ xLim	= get(gca,'Xlim');
 yLim	= get(gca,'Ylim');
 xWidth = xLim(2)-xLim(1);
 yWidth = yLim(2)-yLim(1);
-units_	= get(gca,'Units');
-set(gca,'Units','Pixels')
-pos	= get(gca,'Position');
-set(gca,'Units',units_)
-xscale	= pos(4)/pos(3)*xWidth*arroxAxisPercent/100;
+units	= get(gca,'Units');
+if ~isoctave 
+  set(gca, 'Units', 'Pixels');
+end
+pos = get(gca,'Position');
+paperPos = get(gcf,'PaperPosition');
+set(gca,'Units',units)
+xscale	= paperPos(4)/paperPos(3)*pos(4)/pos(3)*xWidth*arroxAxisPercent/100;
 yscale  = yWidth*arroxAxisPercent/100;
 
 TRIx = [-0.5; 0.5; 0]*headSize;
